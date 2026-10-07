@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14304f">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Dimensionamento de Condutores e Disjuntores — NBR 5410</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1ede3;--card:#fffdf8;--tx:#1b2433;--mu:#5f6676;--ac:#14304f;--onac:#fff;--ac2:#e9a100;--hero:#14304f;--ln:#d9d0bb;--ok:#1f7a4d;--wn:#b9650b;--er:#b3261e;--soft:#f6efdc;--grid:rgba(20,48,79,.06);--fh:"Barlow Condensed","Arial Narrow",Impact,sans-serif;--fb:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--fm:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1829;--card:#16223b;--tx:#ebe7da;--mu:#a1abbd;--ac:#e9b43a;--onac:#14181f;--hero:#0a1322;--ln:#2b3a57;--ok:#4cc79a;--wn:#f0a64a;--er:#f2837b;--soft:#1b2a47;--grid:rgba(255,255,255,.05)}}
+:root[data-theme="dark"]{--bg:#0f1829;--card:#16223b;--tx:#ebe7da;--mu:#a1abbd;--ac:#e9b43a;--onac:#14181f;--hero:#0a1322;--ln:#2b3a57;--ok:#4cc79a;--wn:#f0a64a;--er:#f2837b;--soft:#1b2a47;--grid:rgba(255,255,255,.05)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;color:var(--tx);font:15px/1.55 var(--fb)}
+.hero{background-color:var(--hero);background-image:linear-gradient(rgba(233,161,0,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(233,161,0,.08) 1px,transparent 1px);background-size:32px 32px;color:#fff;border-bottom:6px solid var(--ac2)}
+.hero .in{max-width:980px;margin:0 auto;padding:32px 16px;display:flex;gap:24px;align-items:center;justify-content:space-between}
+.eye{margin:0 0 6px;font:500 12px var(--fm);letter-spacing:.18em;color:var(--ac2)}
+.hero h1{margin:0;font:700 clamp(30px,6vw,50px)/1 var(--fh);text-transform:uppercase;letter-spacing:.01em}
+.hero .sub{margin:10px 0 14px;max-width:520px;opacity:.88}
+.tags{display:flex;flex-wrap:wrap;gap:6px}.tags span{border:1px solid rgba(255,255,255,.35);padding:2px 9px;font:500 12px var(--fm)}
+.cab{width:150px;flex:none}
+main{max-width:980px;margin:0 auto;padding:18px 14px 6px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:4px;padding:18px;margin-bottom:16px;box-shadow:5px 5px 0 var(--ln)}
+h2{margin:0 0 12px;font:700 25px/1.1 var(--fh);text-transform:uppercase;letter-spacing:.02em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+h2::before{background:var(--ac2);color:#1b2433;font:600 13px var(--fm);padding:3px 7px;letter-spacing:0}
+#cfg h2::before{content:"01"}#form h2::before{content:"02"}#res>h2:first-child::before{content:"03"}#mem>h2::before{content:"04"}#dgm h2::before{content:"05"}#learn h2::before{content:"06"}
+#res h2:not(:first-child)::before{content:"▸";padding:3px 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--ln);background:var(--card);color:var(--tx);padding:9px 14px;border-radius:3px;cursor:pointer;font:500 14px var(--fb)}
+.chip:hover{border-color:var(--ac)}
+.chip.on{background:var(--ac);color:var(--onac);border-color:var(--ac)}
+.hint{color:var(--mu);font-size:13px;margin:8px 0 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+label{display:flex;flex-direction:column;font:500 12px var(--fm);color:var(--mu);gap:4px;text-transform:uppercase;letter-spacing:.03em}
+input,select{font:400 16px var(--fb);text-transform:none;letter-spacing:0;padding:9px;border:1.5px solid var(--ln);border-radius:3px;background:var(--bg);color:var(--tx);min-width:0}
+input:focus,select:focus{outline:2px solid var(--ac2);border-color:var(--ac2)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin:12px 0}
+.kpi{background:var(--soft);border-left:5px solid var(--ac2);padding:10px 12px}
+.kpi b{display:block;font:700 28px/1.1 var(--fh)}.kpi span{font-size:12px;color:var(--mu)}
+.badge{display:inline-block;padding:3px 10px;border-radius:2px;font:600 12px var(--fm);letter-spacing:.04em;color:#fff;text-transform:none}
+.ok{background:var(--ok)}.wn{background:var(--wn)}.er{background:var(--er)}
+.th{background:var(--soft);border:1px dashed var(--ac2);padding:10px 12px;margin:0 0 12px;font-size:14px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{font:500 11.5px var(--fm);text-transform:uppercase;letter-spacing:.05em;color:var(--mu)}
+th,td{border-bottom:1px solid var(--ln);padding:7px 8px;text-align:left}
+tr:nth-child(even) td{background:var(--soft)}
+.sc{overflow-x:auto}
+.step{border-left:3px solid var(--ac2);padding:2px 0 2px 14px;margin:14px 0}
+.step h3{margin:0 0 4px;font:700 18px var(--fh);text-transform:uppercase;letter-spacing:.02em}
+.f{font:400 13px var(--fm);background:var(--soft);border:1px dashed var(--ln);padding:2px 7px;display:inline-block;margin:2px 0}
+details{border:1px solid var(--ln);border-radius:3px;padding:9px 13px;margin:8px 0;background:var(--bg)}
+summary{cursor:pointer;font-weight:600}
+button.bt{background:var(--ac);color:var(--onac);border:0;border-radius:3px;padding:10px 16px;font:600 14px var(--fb);cursor:pointer}
+.hide{display:none!important}
+.tc svg{width:100%;height:auto;background:var(--soft);border:1px solid var(--ln);margin-top:10px}
+.tc text{fill:var(--mu);font:11px var(--fm)}
+.tc .gl{stroke:var(--ln);stroke-width:1}
+.tc .bd{fill:var(--ac2);fill-opacity:.38;stroke:var(--ac2);stroke-width:2}
+.tc .mk1{stroke:var(--ok);stroke-width:2}.tc .mk2{stroke:var(--er);stroke-width:2;stroke-dasharray:5 4}.tc .mk3{stroke:var(--wn);stroke-width:5}
+.tc .t1{fill:var(--ok)}.tc .t2{fill:var(--er)}.tc .t3{fill:var(--wn)}.tc .lb{font-weight:600;letter-spacing:.1em;font-size:10px}
+footer{color:var(--mu);font-size:12.5px;padding:6px 16px 28px;max-width:980px;margin:0 auto;border-top:1px solid var(--ln)}
+@media (max-width:620px){.cab{width:84px}}
+@media print{.hero,#cfg,#form,#learn,.noprint{display:none!important}body{background:#fff;color:#000}.card{border:0;box-shadow:none}}
+.dg svg{width:100%;height:auto;background:var(--soft);border:1px solid var(--ln)}
+.dg text{fill:var(--tx);font:12px var(--fb)}.dg .at{fill:var(--onac);font:600 11px var(--fb)}.dg .dt{font:600 11px var(--fm)}.dg .hd{font:700 14px var(--fh);letter-spacing:.08em}
+.dg .ar{fill:var(--ac)}.dg .cp{fill:var(--card);stroke:var(--tx);stroke-width:1.5}.dg .w{stroke:var(--tx);stroke-width:1.6;fill:none}.dg .pe{stroke:var(--ok);stroke-width:1.6;stroke-dasharray:6 4}
+.dg .tn{font:9px var(--fm);fill:var(--mu)}.dg .rd{fill:var(--er);font:italic 12px var(--fb)}.dg .mk{fill:var(--soft);stroke:none}
+html{-webkit-text-size-adjust:100%}button,.chip,select,input{min-height:42px}.tc{overflow-x:auto}.tc svg{min-width:540px}.sw{display:none}
+@media (max-width:700px){.sw{display:block}.card{padding:14px;box-shadow:3px 3px 0 var(--ln)}main{padding:12px 10px 4px}.chip{padding:10px 12px}h2{font-size:22px}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="in"><div><p class="eye">ABNT NBR 5410 · BAIXA TENSÃO</p><h1>Dimensionamento de condutores e disjuntores</h1><p class="sub">Escolha o circuito, informe os dados e receba a seção do cabo, o disjuntor com as proteções térmica e magnética e o memorial de cálculo.</p><div class="tags"><span>Seção mínima</span><span>Ampacidade</span><span>Queda de tensão</span><span>Curto-circuito</span><span>Curvas B · C · D</span></div></div>
+<svg class="cab" viewBox="-80 -80 160 160" aria-hidden="true"><circle r="72" fill="none" stroke="#e9a100" stroke-width="1" stroke-dasharray="3 5"/><circle r="60" fill="#1f4770" stroke="#e9a100" stroke-width="3"/><g fill="#c97b3a" stroke="#f0b27a" stroke-width="1.5"><circle r="16"/><circle cx="32" r="16"/><circle cx="-32" r="16"/><circle cx="16" cy="28" r="16"/><circle cx="-16" cy="28" r="16"/><circle cx="16" cy="-28" r="16"/><circle cx="-16" cy="-28" r="16"/></g></svg></div></header>
+<main>
+<section class="card" id="cfg">
+<h2>1. Que circuito você vai dimensionar?</h2>
+<div class="chips" id="chips"></div>
+<p class="hint" id="khint"></p>
+</section>
+<section class="card" id="form">
+<h2>2. Preencha os dados</h2>
+<div class="grid">
+<label data-k="TUG">Nº de tomadas<input id="nT" type="number" value="5" min="1"></label>
+<label data-k="TUG">Potência por tomada<select id="vaT"><option value="100">100 VA (sala, quarto)</option><option value="600">600 VA (cozinha, serviço)</option></select></label>
+<label data-k="TUE">Equipamento<select id="tue"><option value="5500">Chuveiro (5500 W)</option><option value="3500">Torneira elétrica (3500 W)</option><option value="4500">Forno elétrico (4500 W)</option><option value="1500">Ar-cond. 12.000 BTU (1500 W)</option><option value="3000">Secadora (3000 W)</option><option value="">Outro</option></select></label>
+<label data-k="TUE ILU">Potência (W)<input id="P" type="number" value="5500"></label>
+<label data-k="MOT">Potência do motor (cv)<input id="cv" type="number" value="10" step="0.5"></label>
+<label data-k="MOT">Rendimento η (0–1)<input id="eta" type="number" value="0.9" step="0.01"></label>
+<label data-k="MOT">Ip/In (partida)<input id="ipin" type="number" value="7" step="0.5"></label><label data-k="MOT">Corrente de placa (A) – opc.<input id="Ipl" type="number" placeholder="ex.: 15"></label><label data-k="MOT">Fator de serviço<select id="fs"><option value="1">1,00</option><option value="1.15">1,15</option></select></label><label data-k="MOT">Tempo de partida (s)<input id="tp" type="number" value="3" step="0.5"></label>
+<label data-k="SIN">Corrente do circuito (A)<input id="Is" type="number" value="1" step="0.1"></label>
+<label data-k="TUE ILU MOT">Fator de potência<input id="fp" type="number" value="1" step="0.01"></label>
+<label>Fases<select id="fases"><option value="M">Monofásico (F+N)</option><option value="B">Bifásico (F+F)</option><option value="T">Trifásico</option></select></label>
+<label>Tensão (V)<input id="V" type="number" value="220"></label>
+<label>Comprimento (m)<input id="L" type="number" value="20"></label>
+<label>Isolação<select id="iso"><option value="P">PVC 70 °C</option><option value="E">EPR/XLPE 90 °C</option></select></label>
+<label>Método de instalação<select id="met"><option value="A1">A1 – eletroduto em parede isolante</option><option value="A2">A2 – multipolar em parede isolante</option><option value="B1" selected>B1 – eletroduto aparente/alvenaria</option><option value="B2">B2 – multipolar em eletroduto</option><option value="C">C – sobre parede/bandeja</option><option value="D">D – enterrado</option></select></label>
+<label>Temperatura ambiente (°C)<input id="temp" type="number" value="30"></label>
+<label>Circuitos agrupados<input id="ng" type="number" value="1" min="1"></label>
+<label>Queda máx. (%)<input id="dvmax" type="number" value="4" step="0.5"></label>
+<label>Icc máx. no quadro (kA)<input id="icc" type="number" value="3" step="0.5"></label>
+<label>Icc mín. no fim (A) – opc.<input id="iccmin" type="number" placeholder="ex.: 400"></label>
+<label>Tempo de atuação t (s)<input id="t" type="number" value="0.1" step="0.01"></label>
+</div>
+<p class="hint">Os cálculos atualizam sozinhos a cada alteração.</p>
+</section>
+<section class="card" id="res"></section>
+<section class="card" id="mem"></section>
+<section class="card" id="dgm"></section>
+<section class="card" id="learn">
+<h2>Aprenda</h2>
+<details open><summary>Ib, In e Iz — a regra de ouro</summary><p><b>Ib</b> = corrente que a carga puxa. <b>In</b> = corrente do disjuntor. <b>Iz</b> = corrente que o cabo aguenta (já corrigida). Sempre: <span class="f">Ib ≤ In ≤ Iz</span>. O disjuntor protege o cabo; o cabo precisa aguentar o disjuntor.</p></details>
+<details><summary>Os 4 critérios de dimensionamento do condutor</summary><p><b>1. Seção mínima</b> (Tab. 47): 1,5 mm² iluminação, 2,5 mm² força, 0,5 mm² sinalização. <b>2. Ampacidade</b>: tabelas 36/37 com fatores de temperatura (FCT) e agrupamento (FCA). <b>3. Queda de tensão</b>: limita a perda no cabo (padrão 4% em circuito terminal). <b>4. Curto-circuito</b>: o cabo precisa suportar a energia até o disjuntor abrir (S ≥ Icc·√t / k). Vale a <b>maior</b> seção entre os quatro.</p></details>
+<details><summary>Curvas B, C e D — proteção térmica e magnética</summary><p>O disjuntor tem duas proteções. A <b>térmica</b> (bimetal) cuida da sobrecarga: não atua até 1,13×In e atua em até 1 h (2 h acima de 63 A) a 1,45×In — por isso a norma exige I<sub>2</sub> ≤ 1,45×Iz. A <b>magnética</b> (instantânea) cuida do curto-circuito, e a curva define onde ela atua: <b>B</b> 3–5×In (cargas resistivas, iluminação, cabos longos), <b>C</b> 5–10×In (uso geral, tomadas, motores pequenos), <b>D</b> 10–20×In (motores e transformadores com forte partida). O disparo mínimo deve ficar acima da corrente de partida e o máximo abaixo da menor corrente de curto no fim do circuito.</p></details>
+<details><summary>Relé térmico e contator no motor</summary><p>O <b>relé térmico</b> protege o motor contra sobrecarga prolongada; o disjuntor (ou fusível) protege contra curto-circuito. Ajuste o relé entre 1,0×In e FS×In do motor, sempre abaixo da capacidade do cabo (Iz). A <b>classe de disparo</b> (10, 20 ou 30, IEC 60947-4-1) deve ser maior que o tempo de partida. O <b>contator</b> é escolhido pela corrente AC-3 ≥ In do motor. A NBR 5410 exige proteção contra sobrecarga e curto-circuito; as regras dos relés vêm das normas de produto.</p></details>
+<details><summary>TUG, TUE, motor e sinalização</summary><p><b>TUG</b>: tomadas de uso geral (100 VA ou 600 VA em cozinha/serviço). <b>TUE</b>: tomada de uso específico, circuito dedicado (chuveiro, ar-condicionado). <b>Motor</b>: Ib vem de P(cv)×735,5 / (√3·V·FP·η), e a partida (Ip/In ≈ 6–8) define a curva. <b>Sinalização</b>: baixa corrente e baixa tensão, seção mínima 0,5 mm².</p></details>
+</section>
+</main>
+<footer>Ferramenta de apoio. Tabelas transcritas da NBR 5410:2004 (cobre, métodos A1 a D) — confira com a norma e valide com profissional habilitado. Não considera partida do motor na queda de tensão, harmônicas nem fator de resistividade térmica do solo.</footer>
+<script>
+const $=id=>document.getElementById(id),f=(x,d=2)=>Number(x).toLocaleString('pt-BR',{maximumFractionDigits:d});
+const SEC=[.5,.75,1,1.5,2.5,4,6,10,16,25,35,50,70,95,120,150,185,240,300,400,500,630],MET=['A1','A2','B1','B2','C','D'];
+const CT=[9,12,18,25,32,40,50,65,80,95,115,150],RT=[[.1,.16],[.16,.25],[.25,.4],[.4,.63],[.63,1],[1,1.6],[1.6,2.5],[2.5,4],[4,6],[5.5,8],[7,10],[9,13],[12,18],[17,25],[23,32],[30,40],[37,50],[48,65],[55,70],[63,80],[80,104]];
+const STD=[2,4,6,10,13,16,20,25,32,40,50,63,80,100,125,160,200,250,315,400,500,630],ICU=[3,4.5,6,10,15,20,25];
+const mk=s=>s.trim().split('\n').map(r=>r.split(',').map(Number));
+const P=mk(`7,7,7,7,9,8,9,8,10,9,12,10
+9,9,9,9,11,10,11,10,13,11,15,12
+11,10,11,10,14,12,13,12,16,14,18,15
+14.5,13.5,14,13,17.5,15.5,16.5,15,20,17.5,22,18
+19.5,18,18.5,17.5,24,21,23,20,27,24,29,24
+26,24,25,23,32,28,30,27,36,32,38,31
+34,31,32,29,41,36,38,34,46,41,47,39
+46,42,43,39,57,50,52,46,63,57,63,52
+61,56,57,52,76,68,69,62,85,76,81,67
+80,73,75,68,101,89,90,80,112,96,104,86
+99,89,92,83,125,110,111,99,138,119,125,103
+119,108,110,99,151,134,133,118,168,144,148,122
+151,136,139,125,192,171,168,149,213,184,183,151
+182,164,167,150,232,207,201,179,258,223,216,179
+210,188,192,172,269,239,232,206,299,259,246,203
+240,216,219,196,309,275,265,236,344,294,278,230
+273,248,248,223,353,314,300,268,392,341,312,258
+321,286,291,261,415,369,351,313,461,403,361,297
+367,328,334,298,477,420,401,358,530,464,408,336
+438,390,398,355,571,504,477,425,634,557,478,394
+502,447,456,406,656,577,545,486,729,642,540,445
+578,514,526,467,758,668,626,559,843,743,614,506`);
+const E=P.slice(0,3).concat(mk(`19,17,18.5,16.5,23,20,22,19.5,24,22,26,22
+26,23,25,22,31,28,30,26,33,30,34,29
+35,31,33,30,42,37,40,35,45,40,44,37
+45,40,42,38,54,48,51,44,58,52,56,46
+61,54,57,51,75,66,69,60,80,71,73,61
+81,73,76,68,100,88,91,80,107,96,95,79
+106,95,99,89,133,117,119,105,138,119,121,101
+131,117,121,109,164,144,146,128,171,147,146,122
+158,141,145,130,198,175,175,154,209,179,173,144
+200,179,183,164,253,222,221,194,269,229,213,178
+241,216,220,197,306,269,265,233,328,278,252,211
+278,249,253,227,354,312,305,268,382,322,287,240
+318,285,290,259,407,358,349,307,441,371,324,271
+362,324,329,295,464,408,395,348,506,424,363,304
+424,380,386,346,546,481,462,407,599,500,419,351
+486,435,442,396,628,553,529,465,693,576,474,396
+579,519,527,472,751,661,625,549,835,692,555,464
+664,595,604,541,864,760,715,629,966,797,627,525
+765,685,696,623,998,879,819,721,1122,923,711,596`));
+const T=[10,15,20,25,30,35,40,45,50,55,60,65,70,75,80];
+const FT=[[1.22,1.17,1.12,1.06,1,.94,.87,.79,.71,.61,.5],[1.15,1.12,1.08,1.04,1,.96,.91,.87,.82,.76,.71,.65,.58,.5,.41],[1.1,1.05,1,.95,.89,.84,.77,.71,.63,.55,.45],[1.07,1.04,1,.96,.93,.89,.85,.8,.76,.71,.65,.6,.53,.46,.38]];
+const G=[1,2,3,4,5,6,7,8,9,12,16,20],FA=[1,.8,.7,.65,.6,.57,.54,.52,.5,.45,.41,.38];
+const CUR={B:[3,5],C:[5,10],D:[10,20]};
+const KIND={TUG:['TUG – Tomadas de uso geral','Tomadas comuns. Informe quantas e a potência por tomada (100 VA ou 600 VA em cozinha/serviço).',{fases:'M',V:127,fp:.8,carga:'F',dv:4}],
+TUE:['TUE – Uso específico','Circuito dedicado a um equipamento (chuveiro, ar-condicionado, forno...).',{fases:'M',V:220,fp:1,carga:'F',dv:4}],
+ILU:['Iluminação','Circuito de iluminação (seção mínima 1,5 mm²).',{fases:'M',V:127,fp:.95,carga:'I',dv:4}],
+MOT:['Motor','Informe cv, rendimento e Ip/In. A curva é escolhida para não disparar na partida.',{fases:'T',V:380,fp:.85,carga:'F',dv:4}],
+SIN:['Sinalização / controle','Baixa corrente (campainha, comando). Seção mínima 0,5 mm². Para isolação EPR usa os valores do PVC (conservador).',{fases:'M',V:24,fp:1,carga:'S',dv:4}]};
+const si=p=>`<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const IC={TUG:si('<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 10v2M15 10v2M9 16h6"/>'),TUE:si('<path d="M13 3L5 14h6l-1 7 8-11h-6z"/>'),ILU:si('<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>'),MOT:si('<circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>'),SIN:si('<path d="M5 12a10 10 0 0 1 14 0M8 15a6 6 0 0 1 8 0"/><circle cx="12" cy="18" r="1"/>')};
+function mcc(r){const c=r.c,In=r.In0;return `<h2 style="margin-top:18px">Disjuntor de caixa moldada — ${In} A</h2><div class="th">Acima de 125 A não existem disjuntores miniatura (curvas B, C e D). Use disjuntor de caixa moldada (IEC 60947-2) com térmico e magnético <b>ajustáveis</b>: <b>Ir</b> entre Ib = ${f(c.Ib)} A e Iz = ${f(r.iz,1)} A; <b>Im</b> (magnético) tipicamente 5–10×Ir e sempre abaixo da Icc mínima${c.iccmin?' ('+f(c.iccmin,0)+' A)':''}. Térmico: não atua até 1,05×Ir e atua em até ${In>63?2:1} h a 1,30×Ir.</div>`}
+function rtBlock(r){const c=r.c;if(c.kind!=='MOT')return'';const rt=r.rt,cl={10:'4 a 10 s',20:'6 a 20 s',30:'9 a 30 s'};
+ return `<h2 style="margin-top:18px">Partida direta — contator e relé térmico</h2><div class="kpis"><div class="kpi"><b>${r.ct?r.ct+' A (AC-3)':'—'}</b><span>Contator K1 (AC-3 ≥ Ib)</span></div><div class="kpi"><b>${rt?f(rt[0])+' – '+f(rt[1])+' A':'sem faixa'}</b><span>Relé térmico F7 – faixa de ajuste</span></div><div class="kpi"><b>${f(r.Ir)} A</b><span>Ajuste do relé (Ib × FS ${f(c.fs)})</span></div><div class="kpi"><b>Classe ${r.cls||'—'}</b><span>Atua a 7,2×Ir em ${cl[r.cls]||'consulte o fabricante'}</span></div></div><p class="hint">Regra: ajustar o relé entre 1,0×In e FS×In do motor e sempre ≤ Iz do cabo ${tk(r.Ir<=r.iz)}. Classe 10 para partida normal (até 4 s), 20 para partida longa e 30 para partida muito longa (IEC 60947-4-1). Faixas e correntes AC-3 são valores típicos de catálogo: confira o modelo do fabricante e a coordenação (tipo 1 ou 2) entre disjuntor, contator e relé.</p>`}
+function diagram(r){const c=r.c,tri=c.fases==='T',mot=c.kind==='MOT',rt=r.rt,tue=c.kind==='TUG'||c.kind==='TUE',
+ br=r.mccb?`${r.In0} A caixa moldada`:`${r.In0} A · curva ${r.rec?r.rec.n:'?'}`,
+ xs=tri?[60,90,120]:[75,105],lab=tri?['L1','L2','L3']:c.fases==='B'?['F1','F2']:['F','N'],pe=xs[xs.length-1]+34,mx=(xs[0]+xs[xs.length-1])/2,ym=300,
+ T=(x,y,q,a)=>`<text class="tn" x="${x}" y="${y}" text-anchor="${a||'start'}">${q}</text>`,
+ mk=(x,y,h)=>`<rect class="mk" x="${x-13}" y="${y}" width="26" height="${h}"/>`,
+ ct=(x,y,nc,pb)=>mk(x,y,38)+`<path class="w" d="M${x} ${y}V${y+8}M${x} ${y+30}V${y+38}M${x} ${y+30}L${x-9} ${y+9}${nc?`M${x-13} ${y+8}H${x+3}`:''}${pb?`M${x-4} ${y+19}H${x-18}M${x-18} ${y+15}V${y+23}`:''}"/>`,
+ fz=(x,y)=>mk(x,y,40)+`<rect class="cp" x="${x-5}" y="${y+4}" width="10" height="32"/><path class="w" d="M${x} ${y}V${y+40}"/>`,
+ th=(x,y)=>mk(x,y,38)+`<path class="w" d="M${x} ${y}V${y+6}M${x} ${y+32}V${y+38}"/><rect class="cp" x="${x-8}" y="${y+6}" width="16" height="26"/><rect class="cp" x="${x-4}" y="${y+13}" width="8" height="12"/>`,
+ bk=(x,y)=>ct(x,y)+`<path class="w" d="M${x-4} ${y+4}l8 8M${x+4} ${y+4}l-8 8"/>`,
+ ar=(x,y,w,a,b)=>`<polygon class="ar" points="${x+14},${y} ${x+w},${y} ${x+w},${y+38} ${x+14},${y+38} ${x},${y+19}"/><text class="at" x="${x+w/2+6}" y="${y+16}" text-anchor="middle">${a}</text><text class="at" x="${x+w/2+6}" y="${y+30}" text-anchor="middle">${b}</text>`;
+ let s=`<svg viewBox="0 0 760 ${mot?490:380}" style="min-width:640px"><text class="hd" x="14" y="16">${mot?'FORÇA':'CIRCUITO'}</text>`;
+ xs.forEach((x,i)=>{s+=`<line class="w" x1="${x}" y1="48" x2="${x}" y2="${ym}"/><circle class="cp" cx="${x}" cy="46" r="3"/>${T(x,36,lab[i],'middle')}`});
+ s+=`<line class="pe" x1="${pe}" y1="48" x2="${pe}" y2="${ym+26}"/><circle class="cp" cx="${pe}" cy="46" r="3"/>${T(pe,36,'PE','middle')}`;
+ (mot?[[80,'Q1',bk],[150,'K1',ct],[215,'F7',th]]:[[80,'Q1',bk]]).forEach(a=>{s+=T(8,a[0]+22,a[1]);xs.forEach((x,i)=>{s+=a[2](x,a[0])+T(x+8,a[0]+8,2*i+1)+T(x+8,a[0]+36,2*i+2)})});
+ if(tue)s+=`<rect class="cp" x="${xs[0]-22}" y="150" width="${xs[xs.length-1]-xs[0]+44}" height="44" style="fill:none"/>${T(8,176,'DR')}`;
+ if(mot){s+=`<circle class="cp" cx="${mx}" cy="${ym+26}" r="26"/><text class="dt" x="${mx}" y="${ym+24}" text-anchor="middle">M</text><text class="dt" x="${mx}" y="${ym+38}" text-anchor="middle">${tri?'3~':'1~'}</text>`;xs.forEach((x,i)=>s+=T(x,ym-4,['U1','V1','W1'][i],'middle'));s+=`<path class="pe" d="M${pe} ${ym+26}H${mx+26}"/>`}
+ else s+=`<rect class="cp" x="${xs[0]-22}" y="${ym}" width="${pe-xs[0]+44}" height="40"/><text class="dt" x="${(xs[0]+pe)/2}" y="${ym+24}" text-anchor="middle">CARGA</text>`;
+ s+=`<text class="dt" x="${pe+8}" y="${ym-22}" style="font-size:10px">cabo ${f(r.S)} mm² + PE ${f(r.pe)}</text>`;
+ const A=[[26,'Rede de alimentação',`${c.V} V · ${tri?'3F':c.fases==='B'?'2F':'F+N'}+PE`],[84,'Disjuntor Q1',br]];
+ if(mot)A.push([152,'Contator K1',`AC-3 ≥ ${r.ct||'?'} A`],[217,'Relé térmico F7',rt?`${f(rt[0])}–${f(rt[1])} A · Ir ${f(r.Ir)} A`:`Ir ${f(r.Ir)} A (use TC)`],[ym+7,'Motor elétrico',`${f(c.Ib)} A · ${tri?'trifásico':'monofásico'}`]);
+ else{if(tue)A.push([152,'DR de alta sensibilidade','30 mA (áreas molhadas/externas)']);A.push([ym+2,'Carga',`${KIND[c.kind][0].split(' –')[0]} · Ib ${f(c.Ib)} A`])}
+ A.forEach(a=>s+=ar(200,a[0],185,a[1],a[2]));
+ if(mot)s+=`<text class="rd" x="212" y="136">ou fusíveis gG/aM + seccionadora</text>`;
+ if(mot){const cx=455;
+  s+=`<text class="hd" x="410" y="16">COMANDO</text><line class="w" x1="${cx}" y1="46" x2="${cx}" y2="458"/><circle class="cp" cx="${cx}" cy="46" r="3"/>${T(cx+8,40,'L (fase)')}<circle class="cp" cx="${cx}" cy="458" r="3"/>${T(cx+8,470,'N')}`;
+  s+=fz(cx,62)+T(410,84,'F21');
+  s+=ct(cx,118,1)+T(410,140,'F7')+T(cx+8,126,'95')+T(cx+8,154,'96');
+  s+=ct(cx,172,1,1)+T(410,194,'S0')+T(cx+8,180,'1')+T(cx+8,208,'2');
+  s+=`<path class="w" d="M${cx} 224H${cx+50}V278H${cx}"/>`+ct(cx,232,0,1)+T(410,254,'S1')+T(cx+8,240,'3')+T(cx+8,268,'4')+ct(cx+50,232,0)+T(cx+58,240,'13')+T(cx+58,268,'14')+T(cx+58,254,'K1');
+  s+=ct(cx,292,1,1)+T(410,314,'S2')+T(cx+8,300,'1')+T(cx+8,328,'2');
+  s+=`<rect class="cp" x="${cx-15}" y="350" width="30" height="36"/><text class="dt" x="${cx}" y="372" text-anchor="middle">K1</text>${T(cx+18,348,'A1')}${T(cx+18,398,'A2')}`;
+  s+=fz(cx,406)+T(410,428,'F22');
+  [[62,'Fusível de comando','F21 · 2 A'],[118,'Relé térmico','F7 · contato 95-96 (NF)'],[172,'Botão de emergência','S0 · contato NF'],[232,'Botão liga + selo','S1 (NA) + K1 13-14'],[292,'Botão desliga','S2 · contato NF'],[350,'Bobina do contator','K1 · A1–A2'],[406,'Fusível de comando','F22 · 2 A']].forEach(a=>s+=ar(535,a[0]-1,220,a[1],a[2]))}
+ s+='</svg>';
+ const rows=mot?[['Q1','Disjuntor '+br,'Curto-circuito e seccionamento','NBR NM 60898 / IEC 60947-2'],['K1',`Contator tripolar AC-3 ≥ ${r.ct||'?'} A`,'Liga e desliga o motor','IEC 60947-4-1'],['F7',rt?`Relé térmico ${f(rt[0])}–${f(rt[1])} A, Ir = ${f(r.Ir)} A, classe ${r.cls||'?'}`:'Relé com transformador de corrente','Sobrecarga do motor','IEC 60947-4-1'],['F21 / F22','Fusível ou disjuntor de comando, 2 A','Proteção do circuito de comando','IEC 60269 / 60898'],['S0','Botão de emergência (NF, com trava)','Parada de emergência','IEC 60947-5-1 / 60204-1'],['S1 / S2','Botoeiras liga (NA) e desliga (NF)','Comando com selo (K1 13-14)','IEC 60947-5-1'],['Cabo',`${f(r.S)} mm² + PE ${f(r.pe)} mm²`,'Alimentação do motor','NBR 5410'],['M',`Motor ${tri?'trifásico':'monofásico'}, Ib ${f(c.Ib)} A`,'Carga','—']]
+ :[['Q1','Disjuntor '+br,'Sobrecarga e curto-circuito','NBR NM 60898 / IEC 60947-2']].concat(tue?[['DR','DR de alta sensibilidade, 30 mA','Proteção contra choques (áreas molhadas e externas)','NBR 5410']]:[],[['Cabo',`${f(r.S)} mm² + PE ${f(r.pe)} mm²`,'Alimentação do circuito','NBR 5410'],['Carga',`${KIND[c.kind][0]} · Ib ${f(c.Ib)} A`,'—','—']]);
+ return `<h2>${mot?'Diagrama de partida direta — força e comando':'Diagrama do circuito'}</h2><p class="hint sw">Deslize o diagrama para os lados para ver tudo.</p><div class="sc dg">${s}</div><p class="hint">Esquema com os valores calculados. NA = normalmente aberto, NF = normalmente fechado; linha tracejada verde = PE.${mot?' Contator, relé, fusíveis e botoeiras são valores típicos: confirme no catálogo do fabricante.':''}</p><div class="sc"><table><tr><th>Tag</th><th>Componente</th><th>Função</th><th>Norma</th></tr>${rows.map(a=>`<tr><td><b>${a[0]}</b></td><td>${a[1]}</td><td>${a[2]}</td><td>${a[3]}</td></tr>`).join('')}</table></div>`}
+let viewCurve=null;
+function vcv(n){viewCurve=n;run()}
+function tcChart(r,n){const c=r.c,In=r.In0,[lo,hi]=CUR[n],W=680,H=340,l=56,rt=16,t0=16,b=44,w=W-l-rt,h=H-t0-b,lx=Math.log10(.5),sx=2-lx;
+ const X=v=>l+(Math.log10(Math.min(Math.max(v,.5),100))-lx)/sx*w,Y=t=>t0+(1-(Math.log10(Math.min(Math.max(t,.01),1e4))+2)/6)*h;
+ const tc=In>63?7200:3600,up=[[1.13,1e4],[1.45,tc],[2.55,In>32?120:60],[hi,.1],[hi,.01]],dn=[[lo,.01],[lo,.1],[2.55,1],[1.13,tc]];
+ const pts=up.concat(dn).map(p=>X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1)).join(' ');
+ let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Curva tempo-corrente do disjuntor">`;
+ [.5,1,2,3,5,10,20,50,100].forEach(v=>s+=`<line class="gl" x1="${X(v)}" y1="${t0}" x2="${X(v)}" y2="${t0+h}"/><text x="${X(v)}" y="${H-26}" text-anchor="middle">${v}</text>`);
+ ['10 ms','0,1 s','1 s','10 s','100 s','1000 s','10⁴ s'].forEach((q,i)=>{const y=Y(Math.pow(10,i-2));s+=`<line class="gl" x1="${l}" y1="${y}" x2="${l+w}" y2="${y}"/><text x="${l-6}" y="${y+4}" text-anchor="end">${q}</text>`});
+ s+=`<polygon class="bd" points="${pts}"/><text class="lb" x="${X(1.46)}" y="${Y(900)}">TÉRMICA</text><text class="lb" x="${X((lo+hi)/2)}" y="${Y(.03)}" text-anchor="middle">MAGNÉTICA</text>`;
+ s+=`<line class="mk1" x1="${X(c.Ib/In)}" y1="${t0}" x2="${X(c.Ib/In)}" y2="${t0+h}"/><text class="t1" x="${X(c.Ib/In)+4}" y="${t0+12}">Ib</text>`;
+ if(c.iccmin)s+=`<line class="mk2" x1="${X(c.iccmin/In)}" y1="${t0}" x2="${X(c.iccmin/In)}" y2="${t0+h}"/><text class="t2" x="${X(c.iccmin/In)-4}" y="${t0+12}" text-anchor="end">Icc mín</text>`;
+ if(r.ip)s+=`<line class="mk3" x1="${X(r.ip/In)}" y1="${Y(5)}" x2="${X(r.ip/In)}" y2="${Y(.05)}"/><text class="t3" x="${X(r.ip/In)+7}" y="${Y(1)}">partida</text>`;
+ return s+`<text x="${l+w/2}" y="${H-6}" text-anchor="middle">Corrente (múltiplos de In do disjuntor)</text></svg>`}
+function tcBlock(r){if(r.mccb)return'';const n=viewCurve||(r.rec?r.rec.n:'C');
+ return `<h2 style="margin-top:18px">Curva tempo × corrente — ${n}</h2><div class="chips noprint">${['B','C','D'].map(x=>`<button class="chip${x===n?' on':''}" onclick="vcv('${x}')">Curva ${x}</button>`).join('')}</div><div class="tc">${tcChart(r,n)}</div><p class="hint">Faixa esquemática traçada com os pontos da IEC 60898: 1,13×In sem atuar e 1,45×In em 1 h (2 h acima de 63 A); 2,55×In entre 1 s e 60 s (120 s acima de 32 A); magnético em 0,1 s (início e fim da faixa). Entre os pontos o traçado é reto em escala log-log. Para o projeto final use a curva do fabricante.</p>`}
+let kind='TUE';
+function setKind(k){kind=k;viewCurve=null;const d=KIND[k][2];$('khint').textContent=KIND[k][1];$('fases').value=d.fases;$('V').value=d.V;$('fp').value=d.fp;$('dvmax').value=d.dv;
+ document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c.dataset.k===k));
+ document.querySelectorAll('[data-k]').forEach(e=>{if(e.tagName==='LABEL')e.classList.toggle('hide',!e.dataset.k.split(' ').includes(k))});run()}
+$('chips').innerHTML=Object.keys(KIND).map(k=>`<button class="chip" data-k="${k}">${IC[k]}${KIND[k][0]}</button>`).join('');
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>setKind(c.dataset.k));
+$('tue').onchange=()=>{if($('tue').value)$('P').value=$('tue').value;run()};
+document.querySelectorAll('#form input,#form select').forEach(e=>e.oninput=run);
+const nx=x=>SEC.findIndex(s=>s>=x-1e-6);
+function read(){const n=id=>parseFloat($(id).value),c={kind,fs:parseFloat($('fs').value)||1,tp:parseFloat($('tp').value)||3,fases:$('fases').value,V:n('V'),L:n('L'),iso:$('iso').value,met:$('met').value,temp:n('temp')||30,ng:n('ng')||1,dvmax:n('dvmax')||4,icc:n('icc')||0,iccmin:n('iccmin')||0,t:n('t')||.1,fp:n('fp')||1,carga:KIND[kind][2].carga};
+ const tri=c.fases==='T';if(kind==='TUG'){c.S=n('nT')*n('vaT');c.fp=.8;c.Ib=c.S/c.V*(tri?1/Math.sqrt(3):1);c.f=`Ib = S / V = ${f(c.S)} VA / ${f(c.V)} V`}
+ else if(kind==='SIN'){c.fp=1;c.Ib=n('Is');c.f='Ib informada'}
+ else if(kind==='MOT'){c.eta=n('eta')||1;c.ipin=n('ipin')||7;const W=n('cv')*735.5;c.Ib=n('Ipl')>0?n('Ipl'):W/((tri?Math.sqrt(3):1)*c.V*c.fp*c.eta);c.f=n('Ipl')>0?'Ib = corrente de placa informada':`Ib = (cv × 735,5) / (${tri?'√3 × ':''}V × FP × η) = ${f(W,0)} W / (${tri?'√3 × ':''}${f(c.V)} × ${f(c.fp)} × ${f(c.eta)})`}
+ else{const p=n('P');c.Ib=p/((tri?Math.sqrt(3):1)*c.V*c.fp);c.f=`Ib = P / (${tri?'√3 × ':''}V × FP) = ${f(p,0)} W / (${tri?'√3 × ':''}${f(c.V)} × ${f(c.fp)})`}
+ return c}
+function calc(c){
+ if(!(c.Ib>0&&c.V>0&&c.L>0))return{err:'Preencha potência, tensão e comprimento.'};
+ const tri=c.fases==='T',nC=tri?3:2,F=tri?Math.sqrt(3):2,mi=MET.indexOf(c.met),col=2*mi+nC-2,Tab=c.iso==='P'?P:E;
+ const rho=c.iso==='P'?.0214:.0228,k=c.iso==='P'?115:143,X=.08,sin=Math.sqrt(Math.max(0,1-c.fp*c.fp));
+ const ti=T.findIndex(t=>t>=c.temp),fct=ti<0?0:FT[(c.iso==='E'?1:0)+(c.met==='D'?2:0)][ti];
+ if(!fct)return{err:'Temperatura fora da faixa da tabela de FCT para esta isolação.'};
+ const gi=G.findIndex(n=>n>=c.ng),fca=gi<0?FA[11]:FA[gi],Iz=i=>Tab[i][col]*fct*fca;
+ const In0=STD.find(x=>x>=c.Ib);if(!In0)return{err:'Ib acima de 630 A: use condutores em paralelo e disjuntor de caixa aberta.'};
+ const dvp=i=>F*c.Ib*c.L/1000*(rho*1000/SEC[i]*c.fp+X*sin)/c.V*100;
+ const iMin=c.carga==='S'?0:c.carga==='I'?3:4,iAmp=SEC.findIndex((s,i)=>Iz(i)>=In0),iDV=SEC.findIndex((s,i)=>dvp(i)<=c.dvmax),iCC=c.icc>0?nx(c.icc*1000*Math.sqrt(c.t)/k):-1;
+ if(iAmp<0||iDV<0||(c.icc>0&&iCC<0))return{err:'Nenhuma seção até 630 mm² atende: use condutores em paralelo.'};
+ const iA=Math.max(iMin,iAmp,iDV,iCC),S=SEC[iA],r={c,tri,nC,F,fct,fca,In0,iMin,iAmp,iDV,iCC,iA,S,rho,k,X,sin,col,iz:Iz(iA),dv:dvp(iA),Itab:Tab[iA][col]};
+ r.crit=[['Seção mínima',iMin],['Ampacidade',iAmp],['Queda de tensão',iDV],['Curto-circuito',iCC]].filter(a=>a[1]===iA).map(a=>a[0]).join(' / ');
+ r.pe=S<=16?S:S<=35?16:SEC[nx(S/2)];r.icu=ICU.find(x=>x>=c.icc)||'>25';
+ r.ip=c.kind==='MOT'?c.ipin*c.Ib:0;
+ r.cv=Object.keys(CUR).map(n=>{const [lo,hi]=CUR[n],In=In0,m=c.iccmin?hi*In<=c.iccmin:null,pi=r.ip?lo*In>=1.2*r.ip:null;return{n,lo:lo*In,hi:hi*In,m,pi,ok:m!==false&&pi!==false}});
+ const cand=c.kind==='MOT'?['C','D']:['B','C','D'];r.mccb=In0>125;if(r.mccb){r.cv=[];r.rec=null}else r.rec=r.cv.find(x=>cand.includes(x.n)&&x.ok);
+ if(c.kind==='MOT'){const Ir=c.Ib*c.fs,d=a=>Math.abs(Math.log(Ir/Math.sqrt(a[0]*a[1])));r.Ir=Ir;r.ct=CT.find(x=>x>=c.Ib)||0;r.rt=RT.filter(a=>a[0]<=Ir&&Ir<=a[1]).sort((a,b)=>d(a)-d(b))[0]||null;r.cls=c.tp<=4?10:c.tp<=6?20:c.tp<=9?30:0}
+ return r}
+const tk=v=>v===null?'<span style="color:var(--mu)">n/i</span>':v?'<b style="color:var(--ok)">✓</b>':'<b style="color:var(--er)">✕</b>';
+function run(){const c=read(),r=calc(c),R=$('res'),M=$('mem');
+ if(r.err){R.innerHTML=`<h2>3. Resumo</h2><p><span class="badge er">Atenção</span> ${r.err}</p>`;M.innerHTML='';$('dgm').innerHTML='';return}
+ const ok=r.iz>=r.In0&&r.In0>=c.Ib&&r.dv<=c.dvmax,warn=[];
+ if(!c.icc)warn.push('Icc não informada: curto-circuito não verificado.');if(!c.iccmin)warn.push('Informe a Icc mínima no fim do circuito para validar o disparo magnético.');
+ if(c.kind==='MOT'&&!r.rt)warn.push('Ir fora das faixas típicas de relé direto (0,1 a 104 A): use relé com transformador de corrente.');if(c.t<.1)warn.push('t < 0,1 s: confira a energia passante (I²t) do disjuntor.');if(!r.rec&&!r.mccb)warn.push('Nenhuma curva (B/C/D) passou nas verificações — revise In, cabo ou use disjuntor de caixa moldada.');
+ R.innerHTML=`<h2>3. Resumo <span class="badge ${ok&&(r.rec||r.mccb)?(warn.length?'wn':'ok'):'er'}">${ok&&(r.rec||r.mccb)?(warn.length?'OK com ressalvas':'OK'):'Verificar'}</span></h2>
+ <div class="kpis"><div class="kpi"><b>${f(r.S)} mm²</b><span>Fase (cobre) – critério: ${r.crit}</span></div><div class="kpi"><b>${f(r.S)} / ${f(r.pe)} mm²</b><span>Neutro / PE</span></div>
+ <div class="kpi"><b>${r.In0} A ${r.mccb?'caixa moldada':r.rec?'curva '+r.rec.n:'—'}</b><span>Disjuntor${c.icc?' (Icu ≥ '+r.icu+' kA)':''}</span></div><div class="kpi"><b>${f(c.Ib)} A</b><span>Ib de projeto</span></div>
+ <div class="kpi"><b>${f(r.iz,1)} A</b><span>Iz do condutor</span></div><div class="kpi"><b>${f(r.dv)} %</b><span>Queda de tensão (máx. ${f(c.dvmax)} %)</span></div></div>
+ <div class="sc"><table><tr><th>Critério</th><th>Seção mínima exigida</th></tr><tr><td>1. Seção mínima (Tab. 47)</td><td>${f(SEC[r.iMin])} mm²</td></tr><tr><td>2. Ampacidade</td><td>${f(SEC[r.iAmp])} mm²</td></tr><tr><td>3. Queda de tensão</td><td>${f(SEC[r.iDV])} mm²</td></tr><tr><td>4. Curto-circuito</td><td>${r.iCC>=0?f(SEC[r.iCC])+' mm²':'não verificado'}</td></tr></table></div>
+ ${r.mccb?mcc(r):`<h2 style="margin-top:18px">Disjuntor de ${r.In0} A — térmico e magnético</h2><div class="th"><b>Proteção térmica (sobrecarga):</b> não atua até 1,13×In = ${f(1.13*r.In0)} A e atua em até ${r.In0>63?2:1} h a 1,45×In = ${f(1.45*r.In0)} A. Condição da norma: I<sub>2</sub> = ${f(1.45*r.In0)} A ≤ 1,45×Iz = ${f(1.45*r.iz,1)} A ${tk(1.45*r.In0<=1.45*r.iz)}<br><b>Proteção magnética (curto-circuito):</b> depende da curva escolhida, conforme a tabela abaixo.</div><div class="sc"><table><tr><th>Curva</th><th>Disparo magnético (instantâneo)</th><th>Atua no fim do circuito?</th><th>Aguenta a partida?</th><th></th></tr>
+ ${r.cv.map(x=>`<tr><td><b>${x.n}</b></td><td>${f(x.lo,0)} a ${f(x.hi,0)} A</td><td>${tk(x.m)}</td><td>${c.kind==='MOT'?tk(x.pi):'n/a'}</td><td>${r.rec&&r.rec.n===x.n?'<span class="badge ok">sugerida</span>':''}</td></tr>`).join('')}</table></div>
+ `}${tcBlock(r)}${rtBlock(r)}${warn.map(w=>`<p class="hint"><b>Atenção:</b> ${w}</p>`).join('')}<p class="noprint"><button class="bt" onclick="window.print()">Imprimir / salvar PDF</button></p>`;
+ const s=(t,b)=>`<div class="step"><h3>${t}</h3>${b}</div>`,x=SEC[r.iA];
+ M.innerHTML=`<h2>4. Memorial de cálculo</h2>
+ ${s('Passo 1 – Corrente de projeto (Ib)',`<span class="f">${c.f} = ${f(c.Ib)} A</span>`)}
+ ${s('Passo 2 – Seção mínima (Tab. 47)',`Circuito de ${c.carga==='I'?'iluminação':c.carga==='S'?'sinalização':'força'}: <span class="f">S ≥ ${f(SEC[r.iMin])} mm²</span>`)}
+ ${s('Passo 3 – Disjuntor (Ib ≤ In ≤ Iz)',`Menor corrente padronizada ≥ Ib: <span class="f">In = ${r.In0} A</span>. O cabo será escolhido para suportar In.`)}
+ ${s('Passo 4 – Ampacidade (Tab. 36/37)',`FCT (${c.temp} °C) = <b>${f(r.fct)}</b>; FCA (${c.ng} circuito${c.ng>1?'s':''}) = <b>${f(r.fca)}</b>; ${r.nC} condutores carregados, método ${c.met}.<br><span class="f">I'tab ≥ In / (FCT × FCA) = ${r.In0} / (${f(r.fct)} × ${f(r.fca)}) = ${f(r.In0/(r.fct*r.fca))} A</span><br>Resultado: <b>${f(SEC[r.iAmp])} mm²</b>.`)}
+ ${s('Passo 5 – Queda de tensão',`<span class="f">ΔV = ${r.tri?'√3':'2'} × Ib × L × (R·cosφ + X·senφ)</span> com R = ρ/S (ρ = ${r.rho} Ω·mm²/m) e X = ${r.X} Ω/km.<br>Menor seção com ΔV% ≤ ${f(c.dvmax)}%: <b>${f(SEC[r.iDV])} mm²</b>.`)}
+ ${s('Passo 6 – Curto-circuito',c.icc>0?`<span class="f">S ≥ Icc × √t / k = ${f(c.icc*1000,0)} × √${f(c.t)} / ${r.k} = ${f(c.icc*1000*Math.sqrt(c.t)/r.k)} mm²</span> → <b>${f(SEC[r.iCC])} mm²</b>.`:'Icc não informada — critério não verificado.')}
+ ${s('Passo 7 – Seção adotada',`<span class="f">S = máx(${f(SEC[r.iMin])}; ${f(SEC[r.iAmp])}; ${f(SEC[r.iDV])}${r.iCC>=0?'; '+f(SEC[r.iCC]):''}) = ${f(x)} mm²</span> (decide: ${r.crit}).<br>Verificação: Iz = ${f(r.Itab,1)} × ${f(r.fct)} × ${f(r.fca)} = <b>${f(r.iz,1)} A</b> ≥ In ✔; ΔV real = <b>${f(r.dv)} %</b>.`)}
+ ${s('Passo 8 – Neutro e PE',`Neutro = fase = ${f(x)} mm² (redução só com carga equilibrada e sem harmônicas). PE (Tab. 58): <b>${f(r.pe)} mm²</b>.`)}
+ ${s('Passo 9 – Proteção térmica (sobrecarga)',`Disjuntor padrão IEC 60898: não atua até <b>1,13×In</b> e atua em até ${r.In0>63?2:1} h a <b>1,45×In</b> (corrente convencional de atuação I<sub>2</sub>).<br><span class="f">I2 = 1,45 × ${r.In0} = ${f(1.45*r.In0)} A ≤ 1,45 × Iz = 1,45 × ${f(r.iz,1)} = ${f(1.45*r.iz,1)} A</span> ${1.45*r.In0<=1.45*r.iz?'✔':'✘'}`)}
+ ${s('Passo 10 – Proteção magnética e curva',`Disparo magnético: B = 3–5×In, C = 5–10×In, D = 10–20×In (In = ${r.In0} A).<br>${c.iccmin?`Condição de atuação: <span class="f">hi×In ≤ Icc mín = ${f(c.iccmin,0)} A</span>.`:'Icc mínima não informada.'}${r.ip?`<br>Partida: Ip = ${f(c.ipin)} × ${f(c.Ib)} = ${f(r.ip)} A; condição <span class="f">lo×In ≥ 1,2 × Ip = ${f(1.2*r.ip)} A</span>.`:''}<br>${r.rec?`Curva sugerida: <b>${r.rec.n}</b>.`:'Nenhuma curva atende.'}${c.icc?` Capacidade de interrupção ≥ <b>${r.icu} kA</b>.`:''}`)}`;$('dgm').innerHTML=diagram(r)}
+setKind('TUE');
+</script>
+</body>
+</html>
